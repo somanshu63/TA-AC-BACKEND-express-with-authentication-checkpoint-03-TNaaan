@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Expensify</title>
+    <link rel="icon" href="/images/icon.png" type="image/png">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/615eec2c8f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header>
+    <div class="header flex align-center">
+        <a href="" class="brand flex align-center">
+            <img src="/images/icon.png" alt="logo">
+            <h2 class="fs-20">Expensify</h2>
+        </a>
+        <nav class="flex align-center">
+            <a class="fs-15 margin-0-1" href="/">home</a>
+            <a class="fs-15 margin-0-1" href="/onboarding">onboarding</a>
+            <a class="fs-15 margin-0-1" href="/dashboard">dashboard</a>
+            <a class="fs-15 margin-0-1" href="/users/register">register</a>
+            <% if(user){ %>
+                <a class="fs-15 margin-0-1 pink" href=""><%= user.name %></a>
+                <a class="fs-15 margin-0-1" href="/users/logout">logout</a>
+            <% }else{ %>
+                <a class="fs-15 margin-0-1" href="/users/login">login</a>
+            <% } %>
+        </nav>
+    </div>
+</header>

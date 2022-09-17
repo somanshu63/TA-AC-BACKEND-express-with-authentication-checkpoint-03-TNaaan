@@ -1,0 +1,27 @@
+<%- include('partials/header') -%>
+<main>
+  <div class="home">
+    <h2 class="fs-30 text-center padding-1 purple text-cap">login user</h2>
+    <form action="/users/login" method="post" class="width-400 margin-3-auto">
+        <fieldset>
+            <% if(error){ %>
+                <p class="fs-20 text-center"><%= error %></p>
+            <% } %>
+            <input class="form-control" type="email" name="email" id="" placeholder="enter email">
+            <input class="form-control" type="password" name="password" id="" placeholder="enter password">
+            <input class="form-control" type="submit" value="Login user">
+        </fieldset>
+        <div class="flex justify-left login">
+            <a href="/users/auth/google" class="btn-small login-btn">
+                <p class="fs-15 purple">login with</p>
+                <img class="google-image" src="/images/google.png" alt="">
+            </a>
+            <a href="/users/auth/github" class="btn-small login-btn">
+                <p class="fs-15 purple">login with</p>
+                <img src="/images/github.jpg" alt="">
+            </a>
+        </div>
+    </form>
+  </div>
+</main>
+<%- include('partials/footer') -%>
