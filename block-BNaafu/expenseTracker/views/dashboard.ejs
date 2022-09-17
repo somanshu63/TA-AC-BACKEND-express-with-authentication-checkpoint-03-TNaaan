@@ -1,0 +1,63 @@
+<%- include('partials/header') -%>
+<main>
+    <div class="flex">
+        <div class="home padding-1 width-80">
+            <h1 class="fs-30 text-cap text-center purple">dashboard</h1>
+            <div class="flex padding-0-3 justify-left">
+                <div class="margin-2 income">
+                    <h3 class="fs-25 text-cap text-center purple">list of incomes</h3>
+                    <ul>
+                        <% incomes.forEach( i => { %>
+                            <li class="fs-20 text-cap"><%= i.source %> : <%= i.amount %></li>
+                        <% }) %>
+                    </ul>
+                </div>
+                <div class="margin-2 expense">
+                    <h3 class="fs-25 text-cap text-center purple">list of expenses</h3>
+                    <ul>
+                        <% expenses.forEach( i => { %>
+                            <li class="fs-20 text-cap"><%= i.category %> : <%= i.amount %></li>
+                        <% }) %>
+                    </ul>
+                </div>
+                <% var totalexpense = 0; %>
+                <% expenses.forEach( i => { %>
+                    <% totalexpense = totalexpense + i.amount %>
+                <% }) %>
+                <% var totalincome = 0; %>
+                <% incomes.forEach( i => { %>
+                    <% totalincome = totalincome + i.amount %>
+                <% }) %>
+                <% var totalsavings = totalincome - totalexpense %>
+                <div class="margin-2 expense">
+                    <h3 class="fs-25 text-cap text-center purple">totals</h3>
+                    <ul>
+                        <li class="fs-20 text-cap">total expense: <%= totalexpense %></li>
+                        <li class="fs-20 text-cap">total income: <%= totalincome %></li>
+                        <li class="fs-20 text-cap">total savings: <%= totalsavings %></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <aside class="width-20">
+            <div class="aside">
+                <h3 class="fs-25 orange text-cap padding-1 text-center">filter</h3>
+                <form action="/dashboard" method="get">
+                    <label for="">from date</label>
+                    <input class="form-control" type="date" name="from" id="">
+                    <label for="">to date</label>
+                    <input class="form-control" type="date" name="to" id="">
+                    <label for="">income source</label>
+                    <input class="form-control" type="text" name="source" id="" placeholder="enter source">
+                    <label for="">expense category</label>
+                    <input class="form-control" type="text" name="category" id="" placeholder="enter category">
+                    <input class="form-control" type="submit" value="Apply Filters">
+                </form>
+                <div class="text-center">
+                    <a href="/dashboard" class="btn-small light-blue bg-orange margin-1">clear filters</a>
+                </div>
+            </div>
+        </aside>
+    </div>
+</main>
+<%- include('partials/footer') -%>
