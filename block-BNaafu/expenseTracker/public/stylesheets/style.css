@@ -330,19 +330,45 @@ fieldset{
 
 
 /* dashboard */
+.dashboard{
+  background-position: 50% 50%;
+  background-size: cover;
+  background-image: url(/images/bg.jpg);
+}
 aside{
   background-color: #604BB1;
 }
 .aside{
-  width: 80%;
-  margin: 0 auto;
-}
-.aside form{
-  margin-top: 1rem;
+  overflow: auto;
+  width: 25%;
+  height: 86vh;
+  padding: 0 1rem;
 }
 .aside form label{
   text-transform: capitalize;
   color: white;
-  margin-top: 1rem;
+  font-size: 15px;
+  margin-top: 0.5rem;
   display: inline-block;
+}
+.form-income, .form-expense{
+  display: none;
+}
+.aside h3{
+  padding: 6px 8px;
+  margin: 3px
+}
+.on{
+  background-color: #463686;
+}
+.dashboard-options{
+  border: 1px solid var(--orange);
+  padding: 5px;
+}
+
+.block{
+  display: block !important;
+}
+.none{
+  display: none !important;
 }

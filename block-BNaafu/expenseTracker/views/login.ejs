@@ -5,12 +5,16 @@
     <form action="/users/login" method="post" class="width-400 margin-3-auto">
         <fieldset>
             <% if(error){ %>
-                <p class="fs-20 text-center"><%= error %></p>
+                <p class="fs-20 text-center purple"><%= error %></p>
             <% } %>
             <input class="form-control" type="email" name="email" id="" placeholder="enter email">
             <input class="form-control" type="password" name="password" id="" placeholder="enter password">
             <input class="form-control" type="submit" value="Login user">
         </fieldset>
+        <div class="text-center">
+            <a href="/users/verify" class="btn-small purple bg-blue">verify email</a>
+            <a href="/users/reset" class="btn-small purple bg-blue">reset password</a>
+        </div>
         <div class="flex justify-left login">
             <a href="/users/auth/google" class="btn-small login-btn">
                 <p class="fs-15 purple">login with</p>
@@ -23,5 +27,6 @@
         </div>
     </form>
   </div>
+  <script src="https://smtpjs.com/v3/smtp.js"> </script>
 </main>
 <%- include('partials/footer') -%>

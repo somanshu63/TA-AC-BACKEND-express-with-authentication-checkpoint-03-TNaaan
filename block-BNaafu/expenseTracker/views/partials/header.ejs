@@ -20,14 +20,13 @@
         </a>
         <nav class="flex align-center">
             <a class="fs-15 margin-0-1" href="/">home</a>
-            <a class="fs-15 margin-0-1" href="/onboarding">onboarding</a>
             <a class="fs-15 margin-0-1" href="/dashboard">dashboard</a>
-            <a class="fs-15 margin-0-1" href="/users/register">register</a>
             <% if(user){ %>
                 <a class="fs-15 margin-0-1 pink" href=""><%= user.name %></a>
                 <a class="fs-15 margin-0-1" href="/users/logout">logout</a>
             <% }else{ %>
                 <a class="fs-15 margin-0-1" href="/users/login">login</a>
+                <a class="fs-15 margin-0-1" href="/users/register">register</a>
             <% } %>
         </nav>
     </div>
