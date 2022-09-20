@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 var passport = require('passport');
+var nodemailer = require('nodemailer');
 
 
 
@@ -39,7 +40,6 @@ router.post('/login', (req, res, next) => {
       res.redirect('/users/login');
     }
     console.log(user)
-    if(user && user.password){
       user.verifyPassword(password, (err, result) => {
         if(err) return next(err);
         if(!result){
@@ -47,12 +47,9 @@ router.post('/login', (req, res, next) => {
           return res.redirect('/users/login');
         }
         req.session.userId = user.id;
-        return res.redirect('/onboarding');
+        return res.redirect('/');
       });
-    }else{
-      req.flash('error', 'you have to login through google/github');
-      return res.redirect('/users/login');
-    }
+    
   });
 });
 
@@ -60,7 +57,7 @@ router.get('/auth/github', passport.authenticate('github'));
 
 router.get('/auth/github/callback', passport.authenticate('github', 
   {failureRedirect: '/'}), (req, res) => {
-    res.redirect('/onboarding');
+    res.redirect('/');
   });
 
 
@@ -68,9 +65,46 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] 
 
 router.get('/auth/google/callback', passport.authenticate('google', 
   {failureRedirect: '/'}), (req, res) => {
-    res.redirect('/onboarding');
+    res.redirect('/');
   });
   
+
+
+router.get('/verify', (req, res, next) => {
+
+  var nodemailer = require('nodemailer');
+
+  var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'somutestacc@gmail.com',
+      pass: '63@somugrover'
+    }
+  });
+  
+  var mailOptions = {
+    from: 'somutestacc@gmail.com',
+    to: 'somanshu63@gmail.com',
+    subject: 'Sending Email using Node.js',
+    text: 'That was easy!'
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+});
+
+
+
+router.get('/verify/email', (req, res, next) => {
+  console.log('verified');
+});
+
+
 //logout
 router.get('/logout', (req, res, next) => {
   req.session.destroy();

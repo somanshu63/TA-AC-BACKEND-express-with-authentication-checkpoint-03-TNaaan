@@ -1,3 +1,5 @@
+const Income = require('../models/income');
+const Expense = require('../models/expense');
 var User = require('../models/user')
 
 module.exports = {
@@ -32,5 +34,18 @@ module.exports = {
                 next();
             }
         }
+    },
+    list: (req, res, next) => {
+        Income.distinct('source').exec((err, incomes) => {
+            if(err) return next(err);
+            Expense.distinct('category').exec((err, categories) => {
+                if(err) return next(err);
+                req.sources = incomes;
+                res.locals.sources = incomes;
+                req.categories = categories;
+                res.locals.categories = categories;
+                next();
+            });
+        });
     }
 }

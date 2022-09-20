@@ -1,46 +1,57 @@
 <%- include('partials/header') -%>
 <main>
     <div class="flex">
-        <div class="home padding-1 width-80">
+        <div class="dashboard padding-1 width-80">
             <h1 class="fs-30 text-cap text-center purple">dashboard</h1>
             <div class="flex padding-0-3 justify-left">
                 <div class="margin-2 income">
+                    <% if(incomelist){ %>
                     <h3 class="fs-25 text-cap text-center purple">list of incomes</h3>
                     <ul>
                         <% incomes.forEach( i => { %>
                             <li class="fs-20 text-cap"><%= i.source %> : <%= i.amount %></li>
                         <% }) %>
                     </ul>
+                    <%}%>
                 </div>
                 <div class="margin-2 expense">
-                    <h3 class="fs-25 text-cap text-center purple">list of expenses</h3>
-                    <ul>
-                        <% expenses.forEach( i => { %>
-                            <li class="fs-20 text-cap"><%= i.category %> : <%= i.amount %></li>
-                        <% }) %>
-                    </ul>
+                    <% if(expenselist){ %>
+                        <h3 class="fs-25 text-cap text-center purple">list of expenses</h3>
+                        <ul>
+                            <% expenses.forEach( i => { %>
+                                <li class="fs-20 text-cap"><%= i.category %> : <%= i.amount %></li>
+                            <% }) %>
+                        </ul>
+                    <% } %>
                 </div>
-                <% var totalexpense = 0; %>
-                <% expenses.forEach( i => { %>
-                    <% totalexpense = totalexpense + i.amount %>
-                <% }) %>
-                <% var totalincome = 0; %>
-                <% incomes.forEach( i => { %>
-                    <% totalincome = totalincome + i.amount %>
-                <% }) %>
-                <% var totalsavings = totalincome - totalexpense %>
-                <div class="margin-2 expense">
-                    <h3 class="fs-25 text-cap text-center purple">totals</h3>
-                    <ul>
-                        <li class="fs-20 text-cap">total expense: <%= totalexpense %></li>
-                        <li class="fs-20 text-cap">total income: <%= totalincome %></li>
-                        <li class="fs-20 text-cap">total savings: <%= totalsavings %></li>
-                    </ul>
-                </div>
+                <% if(calculate){ %>
+                    <% var totalexpense = 0; %>
+                    <% expenses.forEach( i => { %>
+                        <% totalexpense = totalexpense + i.amount %>
+                    <% }) %>
+                    <% var totalincome = 0; %>
+                    <% incomes.forEach( i => { %>
+                        <% totalincome = totalincome + i.amount %>
+                    <% }) %>
+                    <% var totalsavings = totalincome - totalexpense %>
+                    <div class="margin-2 expense">
+                        <h3 class="fs-25 text-cap text-center orange">totals</h3>
+                        <ul>
+                            <li class="fs-20 blue text-cap">total expense: <span class="light-blue"><%= totalexpense %></span> </li>
+                            <li class="fs-20 blue text-cap">total income: <span class="light-blue"><%= totalincome %></span> </li>
+                            <li class="fs-20 blue text-cap">total savings: <span class="light-blue"><%= totalsavings %></span> </li>
+                        </ul>
+                    </div>
+                <%}%>
             </div>
         </div>
-        <aside class="width-20">
-            <div class="aside">
+        <aside class="aside">
+            <div class="flex align-center dashboard-options">
+                <h3 class="fs-20 orange on text-cap filter-btn">filter</h3>
+                <h3 class="fs-20 orange text-center text-cap form-income-btn" >add <br> income</h3>
+                <h3 class="fs-20 orange text-center text-cap form-expense-btn" >add <br> expense</h3>
+            </div>
+            <div class="filter">
                 <h3 class="fs-25 orange text-cap padding-1 text-center">filter</h3>
                 <form action="/dashboard" method="get">
                     <label for="">from date</label>
@@ -48,16 +59,56 @@
                     <label for="">to date</label>
                     <input class="form-control" type="date" name="to" id="">
                     <label for="">income source</label>
-                    <input class="form-control" type="text" name="source" id="" placeholder="enter source">
+                    <select class="form-control" name="source" id="">
+                        <option value="">select source</option>
+                        <% sources.forEach(s =>  { %>
+                            <option value="<%= s %>"><%= s %></option>
+                        <% }) %>
+                    </select>
                     <label for="">expense category</label>
-                    <input class="form-control" type="text" name="category" id="" placeholder="enter category">
+                    <select class="form-control" name="category" id="">
+                        <option value="">select category</option>
+                        <% categories.forEach(s =>  { %>
+                            <option value="<%= s %>"><%= s %></option>
+                        <% }) %>
+                    </select>
                     <input class="form-control" type="submit" value="Apply Filters">
                 </form>
+                <div class="month">
+                    <h3 class="fs-20 orange text-cap padding-1 text-center">filter by month</h3>
+                    <form action="/dashboard" method="get">
+                        <input class="form-control" type="month" name="month" id="">
+                        <input class="form-control" type="submit" value="Apply Filter">
+                    </form>
+                </div>
                 <div class="text-center">
                     <a href="/dashboard" class="btn-small light-blue bg-orange margin-1">clear filters</a>
                 </div>
             </div>
+            <div class="form form-income">
+                <form action="/income" method="post" class="padding-1">
+                    <h3 class="fs-25 orange text-cap padding-1 text-center">Add income</h3>
+                    <fieldset>
+                        <input class="form-control" type="text" name="source" id="" placeholder="enter source">
+                        <input class="form-control" type="number" name="amount" id="" placeholder="enter amount">
+                        <input class="form-control" type="date" name="date" id="" placeholder="enter date">
+                        <input class="form-control" type="submit" value="Add Income">
+                    </fieldset>
+                </form>
+            </div>
+            <div class="form form-expense">
+                <form action="/expense" method="post" class="padding-1">
+                    <h3 class="fs-25 orange text-cap padding-1 text-center">Add expense</h3>
+                    <fieldset>
+                        <input class="form-control" type="text" name="category" id="" placeholder="enter expense category">
+                        <input class="form-control" type="number" name="amount" id="" placeholder="enter amount">
+                        <input class="form-control" type="date" name="date" id="" placeholder="enter date">
+                        <input class="form-control" type="submit" value="Add Expense">
+                    </fieldset>
+                </form>
+            </div>
         </aside>
     </div>
+    <script src="/javascripts/script.js"></script>
 </main>
 <%- include('partials/footer') -%>

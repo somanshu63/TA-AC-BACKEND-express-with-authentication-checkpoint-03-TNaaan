@@ -11,10 +11,6 @@ router.get('/', function(req, res, next) {
 });
 
 
-//onboarding page
-router.get('/onboarding', auth.loggedInUser, (req, res, next) => {
-  res.render('onboarding');
-});
 
 //add income
 router.post('/income', (req, res, next) => {
@@ -37,33 +33,61 @@ router.post('/expense', (req, res, next) => {
 });
 
 //dashboard
-router.get('/dashboard', auth.loggedInUser, (req, res, next) => {
+router.get('/dashboard', auth.loggedInUser, auth.list, (req, res, next) => {
+  var {from, to, source, category} = req.query
+  var {month } = req.query
+  var cmonth = new Date().getMonth() + 1
+  var year = new Date().getFullYear()
+  var calculate = true;
+  var incomelist = true;
+  var expenselist = true;
   var query = {}
   query.user = req.user.id;
-
-  
-  if(req.query.from && req.query.to){
-    var startDate = req.query.from;
-    var endDate = req.query.to;
+  console.log(req.query)
+  if(from && to){
+    var startDate = from;
+    calculate = false;
+    var endDate = to;
     query.date = { $gte: startDate, $lte: endDate};
+  }else if(month){
+    query.date = { $gte: `${month}-01`, $lte: `${month}-30`};
+  }else{
+    query.date = { $gte: `${year}-${cmonth}-01`, $lte: `${year}-${cmonth}-30`};
   }
-  if(req.query.source){
-    query.source = req.query.source;
+  if(source && !from){
+    query = {}
+    calculate = false;
+    expenselist = false;
+    query.source = source;
+  }else if(source){
+    expenselist = false;
+    query.source = source;
   }
-  if(req.query.category){
-    query.category = req.query.category;
+  if(category && !from){
+    query = {}
+    calculate = false;
+    incomelist = false;
+    query.category = category;
+  }else if(category){
+    incomelist = false;
+    query.category = category;
+  }
+  if(category && source){
+    incomelist = true;
+    expenselist = true;
+    query.source = source;
+    query.category = category;
   }
 
   
-
-
   Income.find(query, (err, incomes) => {
     if(err) return next(err);
     Expense.find(query, (err, expenses) => {
       if(err) return next(err);
-      res.render('dashboard', {incomes, expenses});
+      res.render('dashboard', {expenselist, incomelist, incomes, expenses,  calculate });
     });
   });
+  
 });
 
 
