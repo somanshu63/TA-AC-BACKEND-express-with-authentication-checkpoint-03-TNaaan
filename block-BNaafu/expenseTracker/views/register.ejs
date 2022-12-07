@@ -1,0 +1,18 @@
+<%- include('partials/header') -%>
+<main>
+  <div class="home">
+    <h2 class="fs-30 text-center padding-1 purple text-cap">register user</h2>
+    <form action="/users/register" method="post" class="width-400 margin-3-auto">
+        <fieldset>
+            <input class="form-control" type="text" name="name" id="" placeholder="enter name">
+            <input class="form-control" type="email" name="email" id="" placeholder="enter email">
+            <input class="form-control" type="password" name="password" id="" placeholder="enter password">
+            <input class="form-control" type="number" name="age" id="" placeholder="enter age">
+            <input class="form-control" type="number" name="phone" id="" placeholder="enter phone">
+            <input class="form-control" type="text" name="country" id="" placeholder="enter country">
+            <input class="form-control" type="submit" value="Add user">
+        </fieldset>
+    </form>
+  </div>
+</main>
+<%- include('partials/footer') -%>
