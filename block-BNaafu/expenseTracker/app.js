@@ -18,7 +18,7 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 //connect database
-mongoose.connect('mongodb://localhost/expenseTracker', 
+mongoose.connect('mongodb+srv://somanshu:somanshu@cluster0.ydhf3wo.mongodb.net/?retryWrites=true&w=majority', 
   {useUnifiedTopology: true}, (err)=> {
     console.log(err ? err : 'connected to database expenseTracker' );
   });
