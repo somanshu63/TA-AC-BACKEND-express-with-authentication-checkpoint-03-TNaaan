@@ -1,5 +1,5 @@
 # Expensify - Expense Tracker Application
-![alt text](https://github.com/somanshu63/blog-app/blob/master/blog-app.png)
+![alt text]()
 # Basic Overview - [Live Demo](https://expensetracker-kdsb.onrender.com)
 This is a Backend application that allows users to track their expenses and incomes, providing a clear and detailed view of their financial situation.
 Tech Stack: Node JS, Express, MongoDB
